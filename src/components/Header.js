@@ -1,11 +1,11 @@
 import React from 'react'
 import logo from '../assets/images/icon-left-font-monochrome-white.svg'
-import {NavLink} from 'react-router-dom'
+import {Link} from 'react-router-dom'
 
 const Header = () => {
   return (
     <div className=' bg-custom-header'>
-      <div className='flex justify-between h-16 max-w-4xl mx-auto'>
+      <div className='container flex justify-between h-16 max-w-5xl mx-auto'>
         <div className='logo'>
           <a href='/'>
             <img src={logo} alt='logo' className='h-full p-4' />
@@ -13,14 +13,14 @@ const Header = () => {
         </div>
         <div className='flex items-center font-bold text-white text-lg'>
           <div>
-            <NavLink exact to='signup' className='signup p-2 text-custom'>
-              Signup
-            </NavLink>
+            <Link to='register' className='signup p-2 text-custom'>
+              S'inscrire
+            </Link>
           </div>
           <div>
-            <NavLink exact to='login' className='login p-2 text-custom'>
-              Login
-            </NavLink>
+            <Link to='login' className='login p-2 text-custom'>
+              Se connecter
+            </Link>
           </div>
         </div>
       </div>

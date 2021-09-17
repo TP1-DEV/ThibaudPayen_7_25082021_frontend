@@ -1,16 +1,16 @@
 import React, {useState} from 'react'
 import axios from 'axios'
 
-const RegisterForm = () => {
+const SignUpForm = () => {
   const [firstname, setFirstName] = useState('')
   const [lastname, setLastName] = useState('')
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
 
-  const handleRegisterForm = async (e) => {
+  const handleSignUpForm = async (e) => {
     e.preventDefault()
     try {
-      const res = await axios.post('http://localhost:5000/users/signup', {
+      const res = await axios.post('http://localhost:3000/users/signup', {
         firstname,
         lastname,
         email,
@@ -24,9 +24,9 @@ const RegisterForm = () => {
 
   return (
     <main className='bg-custom-main h-screen p-8'>
-      <div className='container flex flex-col rounded-xl max-w-4xl mx-auto p-8 bg-custom-section'>
+      <div className='container flex flex-col rounded-xl max-w-3xl mx-auto p-8 bg-custom-section'>
         <h3 className='text-xl font-bold mb-2'>Inscription</h3>
-        <form onSubmit={handleRegisterForm} className='flex flex-col'>
+        <form onSubmit={handleSignUpForm} className='flex flex-col'>
           <label className='font-bold my-2' htmlFor='register-lastname'>
             Nom
           </label>
@@ -84,4 +84,4 @@ const RegisterForm = () => {
   )
 }
 
-export default RegisterForm
+export default SignUpForm

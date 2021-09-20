@@ -12,8 +12,8 @@ const SignInForm = () => {
         email,
         password
       })
-      if (res.data.token) {
-        localStorage.setItem('user', JSON.stringify(res.data))
+      if (res.data) {
+        sessionStorage.setItem('token', res.data)
       }
       window.location = "/"
     } catch (error) {
@@ -24,28 +24,28 @@ const SignInForm = () => {
   return (
     <main className='bg-custom-main h-screen p-8'>
       <div className='container flex flex-col rounded-xl max-w-3xl mx-auto p-8 bg-custom-section'>
-        <h3 className='text-xl font-bold mb-2'>Connexion</h3>
+        <h2 className='text-xl font-bold mb-2'>Connexion</h2>
         <form onSubmit={handleSignInForm} className='flex flex-col'>
-          <label className='font-bold my-2' htmlFor='register-email'>
+          <label className='font-bold my-2' htmlFor='signin-email'>
             Adresse e-mail
           </label>
           <input
-            className='rounded-xl font-bold p-2'
+            className='rounded-xl p-2'
             type='text'
-            name='register-email'
-            id='register-email'
+            name='signin-email'
+            id='signin-email'
             placeholder='j.doe@email.com'
             onChange={(e) => setEmail(e.target.value)}
             value={email}
           />
-          <label className='font-bold my-2' htmlFor='register-password'>
+          <label className='font-bold my-2' htmlFor='signin-password'>
             Mot de passe
           </label>
           <input
-            className='rounded-xl font-bold p-2'
-            type='text'
-            name='register-password'
-            id='register-password'
+            className='rounded-xl p-2'
+            type='password'
+            name='signin-password'
+            id='signin-password'
             placeholder='********'
             onChange={(e) => setPassword(e.target.value)}
             value={password}

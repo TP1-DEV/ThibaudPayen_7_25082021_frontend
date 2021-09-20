@@ -10,13 +10,13 @@ const SignUpForm = () => {
   const handleSignUpForm = async (e) => {
     e.preventDefault()
     try {
-      const res = await axios.post('http://localhost:3000/users/signup', {
+      await axios.post('http://localhost:3000/users/signup', {
         firstname,
         lastname,
         email,
         password
       })
-      console.log(res)
+      window.location = '/signin'
     } catch (error) {
       console.log(error)
     }
@@ -25,52 +25,52 @@ const SignUpForm = () => {
   return (
     <main className='bg-custom-main h-screen p-8'>
       <div className='container flex flex-col rounded-xl max-w-3xl mx-auto p-8 bg-custom-section'>
-        <h3 className='text-xl font-bold mb-2'>Inscription</h3>
+        <h2 className='text-xl font-bold mb-2'>Inscription</h2>
         <form onSubmit={handleSignUpForm} className='flex flex-col'>
-          <label className='font-bold my-2' htmlFor='register-lastname'>
+          <label className='font-bold my-2' htmlFor='signup-lastname'>
             Nom
           </label>
           <input
-            className='rounded-xl font-bold p-2'
+            className='rounded-xl p-2'
             type='text'
-            name='register-lastname'
-            id='register-lastname'
+            name='signup-lastname'
+            id='signup-lastname'
             placeholder='DOE'
             onChange={(e) => setLastName(e.target.value)}
             value={lastname}
           />
-          <label className='font-bold my-2' htmlFor='register-firstname'>
+          <label className='font-bold my-2' htmlFor='signup-firstname'>
             Prénom
           </label>
           <input
-            className='rounded-xl font-bold p-2'
+            className='rounded-xl p-2'
             type='text'
-            name='register-firstname'
-            id='register-firstname'
+            name='signup-firstname'
+            id='signup-firstname'
             placeholder='John'
             onChange={(e) => setFirstName(e.target.value)}
             value={firstname}
           />
-          <label className='font-bold my-2' htmlFor='register-email'>
+          <label className='font-bold my-2' htmlFor='signup-email'>
             Adresse e-mail
           </label>
           <input
-            className='rounded-xl font-bold p-2'
+            className='rounded-xl p-2'
             type='text'
-            name='register-email'
-            id='register-email'
+            name='signup-email'
+            id='signup-email'
             placeholder='j.doe@email.com'
             onChange={(e) => setEmail(e.target.value)}
             value={email}
           />
-          <label className='font-bold my-2' htmlFor='register-password'>
+          <label className='font-bold my-2' htmlFor='signup-password'>
             Mot de passe
           </label>
           <input
-            className='rounded-xl font-bold p-2'
-            type='text'
-            name='register-password'
-            id='register-password'
+            className='rounded-xl p-2'
+            type='password'
+            name='signup-password'
+            id='signup-password'
             placeholder='********'
             onChange={(e) => setPassword(e.target.value)}
             value={password}

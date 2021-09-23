@@ -1,4 +1,5 @@
 import React, {useState} from 'react'
+import {useHistory} from 'react-router'
 import FormData from 'form-data'
 import axios from 'axios'
 
@@ -6,6 +7,8 @@ const CreatePost = () => {
   const [title, setTitle] = useState('')
   const [content, setContent] = useState('')
   const [file, setFile] = useState('')
+
+  const history = useHistory()
 
   const formData = new FormData()
   formData.append('title', title)
@@ -17,10 +20,10 @@ const CreatePost = () => {
     try {
       await axios.post('http://localhost:3000/posts', formData, {
         headers: {
-          Authorization: `Bearer ${sessionStorage.getItem('token')}`
+          Authorization: `Bearer ${localStorage.getItem('token')}`
         }
       })
-      window.location = "/"
+      history.push('/')
     } catch (error) {
       console.log(error)
     }

@@ -1,9 +1,15 @@
-import React, {useState} from 'react'
+import React, {useContext, useState} from 'react'
+import {useHistory} from 'react-router-dom'
+import { UserContext } from '../utils/userContext'
 import axios from 'axios'
 
 const SignInForm = () => {
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
+
+  const {setUser} = useContext(UserContext)
+
+  const history = useHistory()
 
   const handleSignInForm = async (e) => {
     e.preventDefault()
@@ -13,9 +19,10 @@ const SignInForm = () => {
         password
       })
       if (res.data) {
-        sessionStorage.setItem('token', res.data)
+        setUser(res.data.user)
+        localStorage.setItem('user', JSON.stringify(res.data))
       }
-      window.location = "/"
+      history.push('/')
     } catch (error) {
       console.log(error)
     }

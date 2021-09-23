@@ -1,4 +1,5 @@
 import React, {useState} from 'react'
+import {useHistory} from 'react-router-dom'
 import axios from 'axios'
 
 const SignUpForm = () => {
@@ -6,6 +7,8 @@ const SignUpForm = () => {
   const [lastname, setLastName] = useState('')
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
+
+  const history = useHistory()
 
   const handleSignUpForm = async (e) => {
     e.preventDefault()
@@ -16,7 +19,7 @@ const SignUpForm = () => {
         email,
         password
       })
-      window.location = '/signin'
+      history.push('/signin')
     } catch (error) {
       console.log(error)
     }

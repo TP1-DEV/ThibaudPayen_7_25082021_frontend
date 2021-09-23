@@ -1,23 +1,39 @@
-import React from 'react'
-import {Link} from 'react-router-dom'
+import React, {useEffect, useContext} from 'react'
+import {Link, useHistory} from 'react-router-dom'
+import { UserContext } from '../utils/userContext'
 
 const Nav = () => {
-  const token = sessionStorage.getItem('token')
+  const {user, setUser} = useContext(UserContext)
+
+  const history = useHistory()
+
+  useEffect(() => {
+    if (user) {
+      return user
+    } else if (localStorage.getItem('user')) {
+      const isUser = localStorage.getItem('user')
+      const getUser = JSON.parse(isUser)
+      setUser(getUser.user)
+    } else {
+      setUser(null)
+    }
+  })
 
   const signOut = () => {
-    sessionStorage.clear()
-    window.location = '/'
+    localStorage.clear()
+    setUser(null)
+    history.push('/')
   }
 
   return (
     <>
-      {token ? (
+      {user ? (
         <div className='flex items-center font-bold text-white text-lg'>
           <div>
             <Link to='newpost' className='p-4 text-custom '>
               Nouvelle publication
             </Link>
-            <Link to='profil' className='p-4 text-custom '>
+            <Link to='profile' className='p-4 text-custom '>
               Profil
             </Link>
             <button onClick={signOut} className='p-4 text-custom font-bold'>

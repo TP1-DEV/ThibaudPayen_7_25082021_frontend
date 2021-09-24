@@ -13,13 +13,15 @@ const SignUpForm = () => {
   const handleSignUpForm = async (e) => {
     e.preventDefault()
     try {
-      await axios.post('http://localhost:3000/users/signup', {
+      const res = await axios.post('http://localhost:3000/users/signup', {
         firstname,
         lastname,
         email,
         password
       })
-      history.push('/signin')
+      if (res.status === 201) {
+        history.push('/signin')
+      }
     } catch (error) {
       console.log(error)
     }

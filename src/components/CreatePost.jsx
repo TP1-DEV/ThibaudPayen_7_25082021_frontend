@@ -1,5 +1,6 @@
-import React, {useState} from 'react'
+import React, {useContext, useState, useEffect} from 'react'
 import {useHistory} from 'react-router'
+import {UserContext} from '../utils/userContext'
 import FormData from 'form-data'
 import axios from 'axios'
 
@@ -8,6 +9,9 @@ const CreatePost = () => {
   const [content, setContent] = useState('')
   const [file, setFile] = useState('')
 
+  const {tokenCtx} = useContext(UserContext)
+  const [token, setToken] = tokenCtx
+
   const history = useHistory()
 
   const formData = new FormData()
@@ -15,15 +19,29 @@ const CreatePost = () => {
   formData.append('content', content)
   formData.append('file', file)
 
+  useEffect(() => {
+    if (token) {
+      return token
+    } else if (localStorage.getItem('user')) {
+      const isToken = localStorage.getItem('user')
+      const getToken = JSON.parse(isToken)
+      setToken(getToken.token)
+    } else {
+      setToken(null)
+    }
+  })
+
   const handleNewPost = async (e) => {
     e.preventDefault()
     try {
-      await axios.post('http://localhost:3000/posts', formData, {
+      const res = await axios.post('http://localhost:3000/posts', formData, {
         headers: {
-          Authorization: `Bearer ${localStorage.getItem('token')}`
+          Authorization: `Bearer ${token}`
         }
       })
-      history.push('/')
+      if (res.status === 201) {
+        history.push('/')
+      }
     } catch (error) {
       console.log(error)
     }

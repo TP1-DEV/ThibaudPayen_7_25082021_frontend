@@ -7,7 +7,9 @@ const SignInForm = () => {
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
 
-  const {setUser} = useContext(UserContext)
+  const {userCtx, tokenCtx} = useContext(UserContext)
+  const [user, setUser] = userCtx
+  const [token, setToken] = tokenCtx
 
   const history = useHistory()
 
@@ -20,6 +22,7 @@ const SignInForm = () => {
       })
       if (res.data) {
         setUser(res.data.user)
+        setToken(res.data.token)
         localStorage.setItem('user', JSON.stringify(res.data))
       }
       history.push('/')

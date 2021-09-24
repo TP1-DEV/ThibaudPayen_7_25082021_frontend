@@ -3,7 +3,8 @@ import {Link, useHistory} from 'react-router-dom'
 import { UserContext } from '../utils/userContext'
 
 const Nav = () => {
-  const {user, setUser} = useContext(UserContext)
+  const {userCtx} = useContext(UserContext)
+  const [user, setUser] = userCtx
 
   const history = useHistory()
 

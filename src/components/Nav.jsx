@@ -1,24 +1,11 @@
-import React, {useEffect, useContext} from 'react'
+import React, {useContext} from 'react'
 import {Link, useHistory} from 'react-router-dom'
 import { UserContext } from '../utils/userContext'
 
 const Nav = () => {
-  const {userCtx} = useContext(UserContext)
-  const [user, setUser] = userCtx
+  const [user, setUser] = useContext(UserContext)
 
   const history = useHistory()
-
-  useEffect(() => {
-    if (user) {
-      return user
-    } else if (localStorage.getItem('user')) {
-      const isUser = localStorage.getItem('user')
-      const getUser = JSON.parse(isUser)
-      setUser(getUser.user)
-    } else {
-      setUser(null)
-    }
-  })
 
   const signOut = () => {
     localStorage.clear()

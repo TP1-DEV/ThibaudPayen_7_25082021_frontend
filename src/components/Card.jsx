@@ -1,30 +1,16 @@
-import React, {useState, useContext, useEffect} from 'react'
+import React, {useState} from 'react'
 import axios from 'axios'
-import {UserContext} from '../utils/userContext'
 import {FaComments, FaHeart, FaTrash} from 'react-icons/fa'
 
 const Card = (props) => {
   const {posts, data, setData} = props
   const [isOpen, setIsOpen] = useState(false)
 
-  const {tokenCtx} = useContext(UserContext)
-  const [token, setToken] = tokenCtx
-
-  useEffect(() => {
-    if (token) {
-      return token
-    } else if (localStorage.getItem('user')) {
-      const isToken = localStorage.getItem('user')
-      const getToken = JSON.parse(isToken)
-      setToken(getToken.token)
-    } else {
-      setToken(null)
-    }
-  })
-
   const handleRemovePost = async (e) => {
     e.preventDefault()
     try {
+      const getToken = localStorage.getItem('user')
+      const token = JSON.parse(getToken).token
       const res = await axios.delete(`http://localhost:3000/posts/${posts.id}`, {
         headers: {
           Authorization: `Bearer ${token}`

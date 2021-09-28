@@ -3,8 +3,13 @@ import React, {useState, createContext} from 'react'
 export const UserContext = createContext()
 
 export const UserProvider = ({children}) => {
-  const [user, setUser] = useState(null)
-  const [token, setToken] = useState(null)
+  const [user, setUser] = useState(() => {
+    const getUser = localStorage.getItem('user')
+    if (getUser) {
+      const user = JSON.parse(getUser).user
+      return user
+    }
+  })
 
-  return <UserContext.Provider value={{userCtx: [user, setUser], tokenCtx: [token, setToken]}}>{children}</UserContext.Provider>
+  return <UserContext.Provider value={[user, setUser]}>{children}</UserContext.Provider>
 }

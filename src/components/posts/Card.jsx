@@ -1,6 +1,7 @@
 import React, {useState} from 'react'
 import axios from 'axios'
 import {FaComments, FaHeart, FaTrash} from 'react-icons/fa'
+import NewComment from './NewComment'
 
 const Card = (props) => {
   const {posts, data, setData} = props

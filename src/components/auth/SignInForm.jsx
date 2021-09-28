@@ -1,6 +1,6 @@
-import React, {useContext, useEffect, useState} from 'react'
+import React, {useContext, useState} from 'react'
 import {useHistory} from 'react-router-dom'
-import { UserContext } from '../utils/userContext'
+import {UserContext} from '../../utils/userContext'
 import axios from 'axios'
 
 const SignInForm = () => {
@@ -10,10 +10,6 @@ const SignInForm = () => {
   const [user, setUser] = useContext(UserContext)
 
   const history = useHistory()
-  
-  /* useEffect(() => {
-    localStorage.setItem('user', JSON.stringify(user))
-  }, [user]) */
 
   const handleSignInForm = async (e) => {
     e.preventDefault()

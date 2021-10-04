@@ -23,7 +23,7 @@ const Posts = () => {
       <div className='container flex flex-col rounded-xl max-w-3xl mx-auto py-8 px-12 bg-custom-section'>
         <h2 className='text-xl font-bold mb-2'>Publications</h2>
         {data && data
-          .sort((a, b) => new Date(a.createdDate) - new Date(b.createdDate))
+          .sort((a, b) => new Date(b.createdDate) - new Date(a.createdDate))
           .map((posts) => (
             <Card key={posts.id} posts={posts} data={data} setData={setData} />
           ))}

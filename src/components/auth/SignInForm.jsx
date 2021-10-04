@@ -6,6 +6,7 @@ import axios from 'axios'
 const SignInForm = () => {
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
+  // eslint-disable-next-line no-unused-vars
   const [user, setUser] = useContext(UserContext)
   const history = useHistory()
 

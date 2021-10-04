@@ -5,14 +5,12 @@ import axios from 'axios'
 const CommentList = (props) => {
     const {comments, commentsData, setCommentsData} = props
 
-    console.log(commentsData)
-
     const handleRemoveComment = async (e) => {
         e.preventDefault()
         try {
           const getToken = localStorage.getItem('user')
           const token = JSON.parse(getToken).token
-          const res = await axios.delete(`http://localhost:3000/${comments.postId}/comment/${comments.id}`, {
+          const res = await axios.delete(`http://localhost:3000/${comments.post.id}/comments/${comments.id}`, {
             headers: {
               Authorization: `Bearer ${token}`
             }
@@ -33,8 +31,8 @@ const CommentList = (props) => {
         <article className='flex flex-col my-4 p-4 rounded-xl bg-white'>
             <p>{comments.comment}</p>
             <div className='flex'>
-            <div className='flex-1'>Commentaire ajouté le {new Date(comments.updatedDate).toLocaleDateString("fr-FR")}</div>
-            <button onClick={handleRemoveComment} className='self-center'><FaTrash /></button>
+            <div className='flex-1 text-sm mt-4'>Commentaire ajouté le {new Date(comments.updatedDate).toLocaleDateString("fr-FR")} à {new Date(comments.updatedDate).toLocaleTimeString("fr-FR")}</div>
+            <button onClick={handleRemoveComment} className='self-center'><FaTrash size={14}/></button>
             </div>
         </article>
     )

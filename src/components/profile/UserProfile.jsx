@@ -3,6 +3,7 @@ import {useHistory} from 'react-router-dom'
 import {UserContext} from '../../utils/userContext'
 
 const UserProfile = () => {
+  // eslint-disable-next-line no-unused-vars
   const [user, setUser] = useContext(UserContext)
   const history = useHistory()
 

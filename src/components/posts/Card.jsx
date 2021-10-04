@@ -6,8 +6,10 @@ import Comment from './Comment'
 
 const Card = (props) => {
   const {posts, data, setData} = props
+  // eslint-disable-next-line no-unused-vars
   const [user, setUser] = useContext(UserContext)
   const [isOpen, setIsOpen] = useState(false)
+  const [commentsData, setCommentsData] = useState([])
 
   const handleRemovePost = async (e) => {
     e.preventDefault()
@@ -31,9 +33,23 @@ const Card = (props) => {
     }
   }
 
-  const handleComment = (e) => {
+  const handleComment = async (e) => {
     e.preventDefault()
-    setIsOpen(!isOpen)
+    try {
+      const getToken = localStorage.getItem('user')
+      const token = JSON.parse(getToken).token
+      const res = await axios.get(`http://127.0.0.1:3000/${posts.id}/comments`, {
+        headers: {
+          Authorization: `Bearer ${token}`
+        }
+      })
+      if (res.status === 200) {
+        setCommentsData(res.data)
+        setIsOpen(!isOpen)
+      }
+    } catch (error) {
+      console.log(error)
+    }
   }
 
   return (
@@ -51,8 +67,8 @@ const Card = (props) => {
         <button onClick={handleRemovePost}>
           <FaTrash size={20} />
         </button>
-      </div> 
-      {user ? <Comment isOpen={isOpen} postId={posts.id} /> : null}
+      </div>
+      {user ? <Comment isOpen={isOpen} postId={posts.id} commentsData={commentsData} setCommentsData={setCommentsData}/> : null}
     </article>
   )
 }

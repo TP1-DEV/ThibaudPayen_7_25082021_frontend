@@ -5,20 +5,20 @@ import axios from 'axios'
 
 const ProfileForm = () => {
   const [user, setUser] = useContext(UserContext)
-  const [firstname, setFirstName] = useState()
-  const [lastname, setLastName] = useState()
-  const [email, setEmail] = useState()
-  const [password, setPassword] = useState()
+  const [firstname, setFirstName] = useState('')
+  const [lastname, setLastName] = useState('')
+  const [email, setEmail] = useState('')
+  const [password, setPassword] = useState('')
   const history = useHistory()
 
   const handleSubmit = async (e) => {
     e.preventDefault()
     try {
       const updateUser = {
-        firstname,
-        lastname,
-        email,
-        password
+        firstname: firstname === '' ? undefined : firstname,
+        lastname: lastname === '' ? undefined : lastname,
+        email: email === '' ? undefined : email,
+        password: password === '' ? undefined : password
       }
       const getToken = localStorage.getItem('user')
       const token = JSON.parse(getToken).token
@@ -28,11 +28,6 @@ const ProfileForm = () => {
         }
       })
       if (res.status === 200) {
-        const res = await axios.get(`http://localhost:3000/users/${user.id}`,{
-          headers: {
-            Authorization: `Bearer ${token}`
-          }
-        })
         const {...userInLocalStorage} = JSON.parse(localStorage.getItem('user'))
         userInLocalStorage.user = res.data
         setUser(userInLocalStorage.user)

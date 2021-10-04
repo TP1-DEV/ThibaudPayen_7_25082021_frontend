@@ -1,10 +1,12 @@
-import React, {useState} from 'react'
-import axios from 'axios'
+import React, {useState, useContext} from 'react'
+import {UserContext} from '../../utils/userContext'
 import {FaComments, FaHeart, FaTrash} from 'react-icons/fa'
-import NewComment from './NewComment'
+import axios from 'axios'
+import Comment from './Comment'
 
 const Card = (props) => {
   const {posts, data, setData} = props
+  const [user, setUser] = useContext(UserContext)
   const [isOpen, setIsOpen] = useState(false)
 
   const handleRemovePost = async (e) => {
@@ -49,7 +51,8 @@ const Card = (props) => {
         <button onClick={handleRemovePost}>
           <FaTrash size={20} />
         </button>
-      </div>
+      </div> 
+      {user ? <Comment isOpen={isOpen} postId={posts.id} /> : null}
     </article>
   )
 }

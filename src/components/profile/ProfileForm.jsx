@@ -5,12 +5,10 @@ import axios from 'axios'
 
 const ProfileForm = () => {
   const [user, setUser] = useContext(UserContext)
-
   const [firstname, setFirstName] = useState()
   const [lastname, setLastName] = useState()
   const [email, setEmail] = useState()
   const [password, setPassword] = useState()
-
   const history = useHistory()
 
   const handleSubmit = async (e) => {
@@ -51,50 +49,50 @@ const ProfileForm = () => {
       <div className='container flex flex-col items-center rounded-xl max-w-3xl mx-auto p-8 bg-custom-section'>
         <h2 className='text-xl font-bold mb-2'>Mon profil</h2>
         <form onSubmit={handleSubmit} className='flex flex-col items-center'>
-          <label className='font-bold my-2' htmlFor='profil-lastname'>
+          <label className='font-bold my-2' htmlFor='profile-lastname'>
             Nom
           </label>
           <input
             className='rounded-xl font-bold p-2'
             type='text'
-            name='profil-lastname'
-            id='profil-lastname'
-            placeholder='DOE'
+            name='profile-lastname'
+            id='profile-lastname'
+            placeholder={user.lastname}
             onChange={(e) => setLastName(e.target.value)}
             value={lastname}
           />
-          <label className='font-bold my-2' htmlFor='profil-firstname'>
+          <label className='font-bold my-2' htmlFor='profile-firstname'>
             Prénom
           </label>
           <input
             className='rounded-xl font-bold p-2'
             type='text'
-            name='profil-firstname'
-            id='profil-firstname'
-            placeholder='John'
+            name='profile-firstname'
+            id='profile-firstname'
+            placeholder={user.firstname}
             onChange={(e) => setFirstName(e.target.value)}
             value={firstname}
           />
-          <label className='font-bold my-2' htmlFor='profil-email'>
+          <label className='font-bold my-2' htmlFor='profile-email'>
             Adresse e-mail
           </label>
           <input
             className='rounded-xl font-bold p-2'
             type='text'
-            name='profil-email'
-            id='profil-email'
-            placeholder='j.doe@email.com'
+            name='profile-email'
+            id='profile-email'
+            placeholder={user.email}
             onChange={(e) => setEmail(e.target.value)}
             value={email}
           />
-          <label className='font-bold my-2' htmlFor='profil-password'>
+          <label className='font-bold my-2' htmlFor='profile-password'>
             Mot de passe
           </label>
           <input
             className='rounded-xl font-bold p-2'
             type='text'
-            name='profil-password'
-            id='profil-password'
+            name='profile-password'
+            id='profile-password'
             placeholder='********'
             onChange={(e) => setPassword(e.target.value)}
             value={password}

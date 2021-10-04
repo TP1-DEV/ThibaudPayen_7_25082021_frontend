@@ -4,7 +4,6 @@ import {UserContext} from '../../utils/userContext'
 
 const UserProfile = () => {
   const [user, setUser] = useContext(UserContext)
-
   const history = useHistory()
 
   const handleClick = (e) => {

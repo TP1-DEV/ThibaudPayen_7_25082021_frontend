@@ -6,9 +6,7 @@ import axios from 'axios'
 const SignInForm = () => {
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
-
   const [user, setUser] = useContext(UserContext)
-
   const history = useHistory()
 
   const handleSignInForm = async (e) => {

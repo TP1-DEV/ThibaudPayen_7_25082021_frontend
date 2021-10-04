@@ -7,7 +7,6 @@ const SignUpForm = () => {
   const [lastname, setLastName] = useState('')
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
-
   const history = useHistory()
 
   const handleSignUpForm = async (e) => {

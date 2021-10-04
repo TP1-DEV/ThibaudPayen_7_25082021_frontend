@@ -7,9 +7,8 @@ const CreatePost = () => {
   const [title, setTitle] = useState('')
   const [content, setContent] = useState('')
   const [file, setFile] = useState('')
-
   const history = useHistory()
-
+  
   const formData = new FormData()
   formData.append('title', title)
   formData.append('content', content)

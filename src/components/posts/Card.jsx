@@ -1,5 +1,6 @@
 import React, {useState, useContext, useEffect} from 'react'
 import {UserContext} from '../../utils/userContext'
+import {useHistory} from 'react-router'
 import {FaComments, FaHeart, FaTrash} from 'react-icons/fa'
 import axios from 'axios'
 import Comment from './Comment'
@@ -12,11 +13,12 @@ const Card = (props) => {
   const [commentsData, setCommentsData] = useState([])
   const [likesCount, setLikesCount] = useState(0)
 
+  const history = useHistory()
+
   useEffect(() => {
     (async () => {
       try {
         const res = await axios.get(`http://localhost:3000/posts/${posts.id}/likes`)
-        console.log(res.data);
         if (res.status === 200) {
           setLikesCount(res.data.length)
         }
@@ -24,7 +26,25 @@ const Card = (props) => {
         console.log(error)
       }
     })()
-  }, [likesCount])
+  }, [likesCount, posts.id])
+
+  const handleUserPosts = async (e) => {
+    e.preventDefault()
+    try {
+      const getToken = localStorage.getItem('user')
+      const token = JSON.parse(getToken).token
+      const res = await axios.get(`http://localhost:3000/users/${user.id}/posts`, {
+        headers: {
+          Authorization: `Bearer ${token}`
+        }
+      })
+      if (res.status === 200) {
+        history.push({pathname: '/user/posts', state: {user: res.data}})
+      }
+    } catch (error) {
+      console.log(error)
+    }
+  }
 
   const handleRemovePost = async (e) => {
     e.preventDefault()
@@ -87,7 +107,16 @@ const Card = (props) => {
 
   return (
     <article className='container flex flex-col rounded-xl my-4'>
-      <h3 className='font-bold my-2'>{posts.title}</h3>
+      <div className='flex'>
+        <h3 className='font-bold flex-1'>{posts.title}</h3>
+        {posts.user ? (
+          <button onClick={handleUserPosts} className='text-sm'>
+            <span className='font-bold '>{posts.user.firstname}</span> le{' '}
+            {new Date(posts.updatedDate).toLocaleDateString('fr-FR')} à {new Date(posts.updatedDate).toLocaleTimeString("fr-FR")}
+          </button>
+        ) : null}
+      </div>
+
       <p className='my-2 break-all'>{posts.content}</p>
       {posts.file && <img src={posts.file} alt='postfile' className='h-64 object-cover rounded-xl' />}
       <div className='flex justify-between mx-20 mt-2'>

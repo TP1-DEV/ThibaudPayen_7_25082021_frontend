@@ -8,7 +8,7 @@ const Header = () => {
   const history = useHistory()
 
   const signOut = () => {
-    localStorage.clear()
+    localStorage.removeItem('user')
     setUser(null)
     history.push('/')
   }

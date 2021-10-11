@@ -53,7 +53,7 @@ const CreatePost = () => {
             Message
           </label>
           <textarea
-            className='rounded-xl p-2'
+            className='rounded-xl p-2 h-40'
             type='text'
             name='post-content'
             id='post-content'

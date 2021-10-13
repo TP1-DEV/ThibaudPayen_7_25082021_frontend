@@ -3,7 +3,7 @@ module.exports = {
   darkMode: false, // or 'media' or 'class'
   theme: {
     textColor: {
-      'custom': '#B96759',
+      'custom': '#C9897E',
     },
     extend: {
       colors: {

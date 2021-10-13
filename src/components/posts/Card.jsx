@@ -12,6 +12,8 @@ const Card = (props) => {
   const [isOpen, setIsOpen] = useState(false)
   const [commentsData, setCommentsData] = useState([])
   const [likesCount, setLikesCount] = useState(0)
+  const [commentsCount, setCommentsCount] = useState(0)
+  const [color, setColor] = useState('black')
 
   const history = useHistory()
 
@@ -19,14 +21,30 @@ const Card = (props) => {
     (async () => {
       try {
         const res = await axios.get(`http://localhost:3000/posts/${posts.id}/likes`)
+
         if (res.status === 200) {
-          setLikesCount(res.data.length)
+          setLikesCount(res.data)
         }
       } catch (error) {
         console.log(error)
       }
     })()
-  }, [likesCount, posts.id])
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [likesCount])
+
+  useEffect(() => {
+    (async () => {
+      try {
+        const res = await axios.get(`http://localhost:3000/${posts.id}/comments`)
+        if (res.status === 200) {
+          setCommentsCount(res.data.length)
+        }
+      } catch (error) {
+        console.log(error)
+      }
+    })()
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [commentsCount])
 
   const handleUserPosts = async (e) => {
     e.preventDefault()
@@ -83,7 +101,7 @@ const Card = (props) => {
         setIsOpen(!isOpen)
       }
     } catch (error) {
-      console.log(error)
+      window.alert('Veuillez vous connecter pour voir les commentaires')
     }
   }
 
@@ -99,9 +117,14 @@ const Card = (props) => {
       })
       if (res.status === 201) {
         setLikesCount(likesCount + 1)
+        if (color === 'black') {
+          setColor('red')
+        } else {
+          setColor('black')
+        }
       }
     } catch (error) {
-      console.log('Veuillez vous connecter pour like')
+      window.alert('Veuillez vous connecter pour like')
     }
   }
 
@@ -112,7 +135,7 @@ const Card = (props) => {
         {posts.user ? (
           <button onClick={handleUserPosts} className='text-sm'>
             <span className='font-bold '>{posts.user.firstname}</span> le{' '}
-            {new Date(posts.updatedDate).toLocaleDateString('fr-FR')} à {new Date(posts.updatedDate).toLocaleTimeString("fr-FR")}
+            {new Date(posts.updatedDate).toLocaleDateString('fr-FR')}
           </button>
         ) : null}
       </div>
@@ -120,19 +143,29 @@ const Card = (props) => {
       <p className='my-2 break-all'>{posts.content}</p>
       {posts.file && <img src={posts.file} alt='postfile' className='h-64 object-cover rounded-xl' />}
       <div className='flex justify-between mx-20 mt-2'>
-        <button onClick={handleComment}>
-          <FaComments size='20' />
+        <button onClick={handleComment} className='flex'>
+          <FaComments size='20' className='self-center mr-2' />
+          <span>{commentsCount}</span>
         </button>
         <button onClick={handleLikePost} className='flex'>
-          <FaHeart size='20' className='self-center mr-2' />
+          <FaHeart size='20' color={color} className='self-center mr-2' />
           <span>{likesCount}</span>
         </button>
-        <button onClick={handleRemovePost}>
-          <FaTrash size='20' />
-        </button>
+        {user && (user.id === posts.user.id || user.isAdmin === true) ? (
+          <button onClick={handleRemovePost}>
+            <FaTrash size='20' />
+          </button>
+        ) : null}
       </div>
       {user ? (
-        <Comment isOpen={isOpen} postId={posts.id} commentsData={commentsData} setCommentsData={setCommentsData} />
+        <Comment
+          isOpen={isOpen}
+          postId={posts.id}
+          commentsData={commentsData}
+          setCommentsData={setCommentsData}
+          commentsCount={commentsCount}
+          setCommentsCount={setCommentsCount}
+        />
       ) : null}
     </article>
   )

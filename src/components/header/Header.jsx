@@ -16,11 +16,11 @@ const Header = () => {
   return (
     <div className=' bg-custom-header'>
       <div className='container flex justify-between h-16 max-w-4xl mx-auto'>
-        <div className='logo'>
+        <h1 className='logo'>
           <Link to='/'>
-            <img src={logo} alt='logo' className='h-full p-4' />
+            <img src={logo} alt='groupomania-logo' className='h-full p-4' />
           </Link>
-        </div>
+        </h1>
         {user ? (
           <div className='flex items-center font-bold text-white text-lg'>
             <div>

@@ -3,7 +3,7 @@ import CommentList from './CommentList'
 import axios from 'axios'
 
 const Comment = (props) => {
-  const {isOpen, postId, commentsData, setCommentsData} = props
+  const {isOpen, postId, commentsData, setCommentsData, commentsCount, setCommentsCount} = props
   const [newComment, setNewComment] = useState('')
 
   const handleNewComment = async (e) => {
@@ -25,6 +25,7 @@ const Comment = (props) => {
       if (res.status === 201) {
         setCommentsData(commentsData => [...commentsData, res.data])
         setNewComment('')
+        setCommentsCount(commentsCount + 1)
       }
     } catch (error) {
       console.log(error)
@@ -37,8 +38,8 @@ const Comment = (props) => {
         <textarea
           className='rounded-xl p-4 w-full h-40'
           type='text'
-          name='newComment'
-          id='newComment'
+          name='comment-content'
+          id='comment-content'
           placeholder='Mon message'
           onChange={(e) => setNewComment(e.target.value)}
           value={newComment}
@@ -50,7 +51,7 @@ const Comment = (props) => {
       {commentsData &&
         commentsData
           .sort((a, b) => new Date(b.createdDate) - new Date(a.createdDate))
-          .map((comments) => <CommentList key={comments.id} comments={comments} commentsData={commentsData} setCommentsData={setCommentsData} />)}
+          .map((comments) => <CommentList key={comments.id} comments={comments} commentsData={commentsData} setCommentsData={setCommentsData} commentsCount={commentsCount} setCommentsCount={setCommentsCount}/>)}
     </div>
   )
 }
